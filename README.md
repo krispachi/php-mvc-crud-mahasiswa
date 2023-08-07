@@ -14,3 +14,10 @@ Saya menggunakan 1 tabel tambahan untuk menghubungkan 2 tabel didalam database.<
 - SweetAlert2
 - Select2
 - JSON Web Token
+
+## Cara menggunakan
+- Download semua file
+- Siapkan database (db_siskampus.sql sebagai contoh)
+- Pindahkan isi AdminLTE dari adminlte.io ke folder public/AdminLTE
+- Sebelum menjalankan server, ketik "composer update"
+- Jalankan server PHP di folder public
