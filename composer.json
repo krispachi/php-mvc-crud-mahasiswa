@@ -1,0 +1,20 @@
+{
+    "name": "krispachi/krisna-lte",
+    "description": "Tugas Website dengan template AdminLTE 24Jul2023",
+    "type": "project",
+    "authors": [
+        {
+            "name": "krispachi",
+            "email": "cryzna8805@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8",
+        "firebase/php-jwt": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Krispachi\\KrisnaLTE\\": "app"
+        }
+    }
+}
