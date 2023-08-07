@@ -24,7 +24,7 @@
 
         <form action="/register" method="post">
             <div class="input-group mb-3">
-                <input type="text" name="username" class="form-control" value="<?php if(isset($_GET["username"])) { echo $_GET["username"]; } ?>" placeholder="Username" required>
+                <input type="text" name="username" class="form-control" value="<?= $_SESSION["form-input"]["username"] ?? "" ?>" placeholder="Username" required>
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-user"></span>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                <input type="email" name="email" class="form-control" value="<?php if(isset($_GET["email"])) { echo $_GET["email"]; } ?>" placeholder="Email" required>
+                <input type="email" name="email" class="form-control" value="<?= $_SESSION["form-input"]["email"] ?? "" ?>" placeholder="Email" required>
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -64,6 +64,11 @@
                 </div>
                 <!-- /.col -->
             </div>
+            <?php
+                if(isset($_SESSION["form-input"])) {
+                    unset($_SESSION["form-input"]);
+                }
+            ?>
         </form>
 
         <a href="/login" class="text-center">Saya sudah registrasi</a>

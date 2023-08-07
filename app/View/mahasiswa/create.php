@@ -52,23 +52,23 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nim">NIM</label>
-                                        <input type="number" name="nim" class="form-control" id="nim" value="<?php if(isset($_GET["nim"])) { echo $_GET["nim"]; } ?>" placeholder="Masukkan NIM" required>
+                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? "" ?>" placeholder="Masukkan NIM" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama">Nama</label>
-                                        <input type="text" name="nama" class="form-control" id="nama" value="<?php if(isset($_GET["nama"])) { echo $_GET["nama"]; } ?>" placeholder="Masukkan Nama" required>
+                                        <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? "" ?>" placeholder="Masukkan Nama" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="jurusan">Jurusan</label>
-                                        <input type="number" name="id_jurusan" class="form-control" id="jurusan" value="<?php if(isset($_GET["id_jurusan"])) { echo $_GET["id_jurusan"]; } ?>" placeholder="Masukkan Jurusan">
+                                        <input type="number" name="id_jurusan" class="form-control" id="jurusan" value="<?= $_SESSION["form-input"]["id_jurusan"] ?? "" ?>" placeholder="Masukkan Jurusan">
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
-                                        <input type="text" name="alamat" class="form-control" id="alamat" value="<?php if(isset($_GET["alamat"])) { echo $_GET["alamat"]; } ?>" placeholder="Masukkan Alamat" required>
+                                        <input type="text" name="alamat" class="form-control" id="alamat" value="<?= $_SESSION["form-input"]["alamat"] ?? "" ?>" placeholder="Masukkan Alamat" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="telepon">Telepon</label>
-                                        <input type="number" name="telepon" class="form-control" id="telepon" value="<?php if(isset($_GET["telepon"])) { echo $_GET["telepon"]; } ?>" placeholder="Masukkan Telepon" required>
+                                        <input type="number" name="telepon" class="form-control" id="telepon" value="<?= $_SESSION["form-input"]["telepon"] ?? "" ?>" placeholder="Masukkan Telepon" required>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -77,6 +77,11 @@
                                     <button type="submit" class="btn btn-success">Kirim</button>
                                     <a href="/" class="btn btn-secondary">Kembali</a>
                                 </div>
+                                <?php
+                                    if(isset($_SESSION["form-input"])) {
+                                        unset($_SESSION["form-input"]);
+                                    }
+                                ?>
                             </form>
                         </div>
                         <!-- /.card -->

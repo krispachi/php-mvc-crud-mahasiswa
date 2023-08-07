@@ -61,12 +61,14 @@ class AuthController {
 
         if(empty(trim($data["username"])) || empty(trim($data["email"])) || empty(trim($data["password"])) || empty(trim($data["confirm_password"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
+            $this->sendFormInput($data);
             header("Location: /register");
             exit(0);
         }
 
         if($data["password"] != $data["confirm_password"]) {
             FlashMessage::setFlashMessage("error", "Konfirmasi password salah");
+            $this->sendFormInput($data);
             header("Location: /register");
             exit(0);
         }
@@ -79,6 +81,7 @@ class AuthController {
             exit(0);
         } catch (Exception $exception) {
             FlashMessage::setFlashMessage("error", $exception->getMessage());
+            $this->sendFormInput($data);
             header("Location: /register");
             exit(0);
         }
@@ -103,6 +106,7 @@ class AuthController {
     public function delete(int $id) {       
         $model = new UserModel();
         try {
+            // Supaya tidak bisa ubah user lain
             $jwt = $_COOKIE["X-KRISNALTE-SESSION"];
             $payload = JWT::decode($jwt, new Key(AuthController::$SECRET_KEY, "HS256"));
             if($payload->user_id != $id) {
@@ -129,12 +133,14 @@ class AuthController {
 
         if(empty(trim($data["username"])) || empty(trim($data["email"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
+            $this->sendFormInput($data);
             header("Location: /users");
             exit;
         }
 
         $model = new UserModel();
         try {
+            // Supaya tidak bisa ubah user lain
             $jwt = $_COOKIE["X-KRISNALTE-SESSION"];
             $payload = JWT::decode($jwt, new Key(AuthController::$SECRET_KEY, "HS256"));
             if($payload->user_id != $id) {
@@ -147,8 +153,20 @@ class AuthController {
             exit(0);
         } catch (Exception $exception) {
             FlashMessage::setFlashMessage("error", $exception->getMessage());
+            $this->sendFormInput($data);
             header("Location: /users");
             exit(0);
+        }
+    }
+
+    public function sendFormInput(array $data) : void {
+        $_SESSION["form-input"] = [];
+        foreach($data as $key => $input) {
+            if(!empty(trim($input))) {
+                $_SESSION["form-input"] += [
+                    "$key" => $input
+                ];
+            }
         }
     }
 }

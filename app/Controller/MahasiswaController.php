@@ -28,6 +28,7 @@ class MahasiswaController {
 
         if(empty(trim($data["nim"])) || empty(trim($data["nama"])) || empty(trim($data["alamat"])) || empty(trim($data["telepon"])) || empty(trim($data["id_jurusan"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
+            $this->sendFormInput($data);
             header("Location: /mahasiswas/create");
             exit(0);
         }
@@ -40,6 +41,7 @@ class MahasiswaController {
             exit(0);
         } catch (Exception $exception) {
             FlashMessage::setFlashMessage("error", $exception->getMessage());
+            $this->sendFormInput($data);
             header("Location: /mahasiswas/create");
             exit(0);
         }
@@ -67,6 +69,7 @@ class MahasiswaController {
 
         if(empty(trim($data["nim"])) || empty(trim($data["nama"])) || empty(trim($data["alamat"])) || empty(trim($data["telepon"])) || empty(trim($data["id_jurusan"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
+            $this->sendFormInput($data);
             header("Location: /mahasiswas/update/{$id}");
             exit(0);
         }
@@ -79,6 +82,7 @@ class MahasiswaController {
             exit(0);
         } catch (Exception $exception) {
             FlashMessage::setFlashMessage("error", $exception->getMessage());
+            $this->sendFormInput($data);
             header("Location: /mahasiswas/update/{$id}");
             exit(0);
         }
@@ -95,6 +99,17 @@ class MahasiswaController {
             FlashMessage::setFlashMessage("error", $exception->getMessage());
             header("Location: /mahasiswas/create");
             exit(0);
+        }
+    }
+
+    public function sendFormInput(array $data) : void {
+        $_SESSION["form-input"] = [];
+        foreach($data as $key => $input) {
+            if(!empty(trim($input))) {
+                $_SESSION["form-input"] += [
+                    "$key" => $input
+                ];
+            }
         }
     }
 }
