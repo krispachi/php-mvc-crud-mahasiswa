@@ -81,9 +81,9 @@
 										<td><?= $row["alamat"] ?? "-" ?></td>
 										<td><?= $row["telepon"] ?? "-" ?></td>
 										<td style="white-space: nowrap;">
-											<a href="/mahasiswas/update/<?= $row["id"] ?>" class="btn btn-sm btn-warning">Edit</a>
+											<a href="/mahasiswas/update/<?= $row["id"] ?>" class="btn btn-sm btn-warning">Ubah</a>
 											<form action="/mahasiswas/delete/<?= $row["id"] ?>" method="post" class="form-delete d-inline-block">
-												<button type="submit" class="btn btn-sm btn-danger button-delete">Delete</button>
+												<button type="submit" class="btn btn-sm btn-danger button-delete">Hapus</button>
 											</form>
 										</td>
 									</tr>
@@ -150,7 +150,8 @@ $(function () {
 		"responsive": true,
 	});
 
-	$(".button-delete").click(function(e) {
+	// ada banyak form di tabel dengan class .form-delete, makannya pakai $(this)
+	$(".form-delete").one("submit", function(e) {
 		e.preventDefault();
 		Swal.fire({
 			title: 'Are you sure?',
@@ -162,7 +163,7 @@ $(function () {
 			confirmButtonText: 'Yes, delete it!'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$(".form-delete").submit();
+				$(this).submit();
 			} else {
 				Swal.fire({
 					title: 'Batal!',

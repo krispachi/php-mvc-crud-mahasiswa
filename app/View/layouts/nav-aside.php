@@ -37,7 +37,7 @@
 						$payload = Firebase\JWT\JWT::decode($jwt, new Firebase\JWT\Key(Krispachi\KrisnaLTE\Controller\AuthController::$SECRET_KEY, "HS256"));
 						$query = new Krispachi\KrisnaLTE\Model\UserModel;
 						$result = $query->getUserById($payload->user_id);
-						echo "<a class='d-block'>" . $result["username"] . "</a>";
+						echo "<a class='d-block'>" . $result["username"] ?? "N/A" . "</a>";
 					} else {
 						echo "<a class='d-block'>Krisna Ariwidnyana</a>";
 					}
@@ -74,7 +74,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="subject.php" class="nav-link <?= str_contains($_SERVER['REQUEST_URI'], '/subject') ? 'active' : '' ?>">
+					<a href="/subjects" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/subjects' ? 'active' : '' ?>">
 						<i class="nav-icon fas fa-book"></i>
 						<p>Mata Kuliah</p>
 					</a>

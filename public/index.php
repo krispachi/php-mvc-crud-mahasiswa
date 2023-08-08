@@ -6,9 +6,10 @@ session_start();
 
 use Krispachi\KrisnaLTE\App\Router;
 use Krispachi\KrisnaLTE\Controller\AuthController;
-use Krispachi\KrisnaLTE\Controller\MahasiswaController;
 use Krispachi\KrisnaLTE\Middleware\AuthMiddleware;
 use Krispachi\KrisnaLTE\Middleware\GuestMiddleware;
+use Krispachi\KrisnaLTE\Controller\SubjectController;
+use Krispachi\KrisnaLTE\Controller\MahasiswaController;
 
 Router::add("GET", "/login", AuthController::class, "index", [GuestMiddleware::class]);
 Router::add("POST", "/login", AuthController::class, "signin", [GuestMiddleware::class]);
@@ -27,5 +28,11 @@ Router::add("POST", "/mahasiswas/delete/([0-9a-zA-Z]*)", MahasiswaController::cl
 Router::add("GET", "/users", AuthController::class, "profile", [AuthMiddleware::class]);
 Router::add("POST", "/users/update/([0-9a-zA-Z]*)", AuthController::class, "edit", [AuthMiddleware::class]);
 Router::add("POST", "/users/delete/([0-9a-zA-Z]*)", AuthController::class, "delete", [AuthMiddleware::class]);
+
+Router::add("GET", "/subjects", SubjectController::class, "index", [AuthMiddleware::class]);
+Router::add("POST", "/subjects", SubjectController::class, "store", [AuthMiddleware::class]);
+Router::add("GET", "/subjects/([0-9a-zA-Z]*)", SubjectController::class, "subject", [AuthMiddleware::class]);
+Router::add("POST", "/subjects/([0-9a-zA-Z]*)", SubjectController::class, "edit", [AuthMiddleware::class]);
+Router::add("POST", "/subjects/delete/([0-9a-zA-Z]*)", SubjectController::class, "delete", [AuthMiddleware::class]);
 
 Router::run();
