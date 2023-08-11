@@ -58,15 +58,17 @@
 
 <?php require __DIR__ . "/../layouts/bodyscripts.php" ?>
 <script>
-    function hideShowPassword() {
-        if($("#password").attr("type") === "password") {
-            $("#password").attr("type", "text");
-            $(".eye-icon").removeClass("fa-eye").addClass("fa-eye-slash");
-        } else {
-            $("#password").attr("type", "password");
-            $(".eye-icon").removeClass("fa-eye-slash").addClass("fa-eye");
+    $(document).ready(function() {
+        function hideShowPassword() {
+            if($("#password").attr("type") === "password") {
+                $("#password").attr("type", "text");
+                $(".eye-icon").removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                $("#password").attr("type", "password");
+                $(".eye-icon").removeClass("fa-eye-slash").addClass("fa-eye");
+            }
         }
-    };
+    });
 </script>
 </body>
 </html>

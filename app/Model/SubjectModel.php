@@ -7,6 +7,8 @@ use Krispachi\KrisnaLTE\App\Database;
 
 class SubjectModel {
     private $table = "mata_kuliahs";
+    private $jurusan_mata_kuliah_table = "jurusans_mata_kuliahs";
+    private $major_table = "jurusans";
     private $database;
 
     public function __construct() {
@@ -46,16 +48,24 @@ class SubjectModel {
         }
 
         // Hapus di tabel mata_kuliahs dan di junction jurusans_mata_kuliahs (db transaction)
-        
-        $query = "DELETE FROM {$this->table} WHERE id = :id";
-        $this->database->query($query);
-        $this->database->bind("id", $id);
-        $this->database->execute();
+        try {
+            $this->database->beginTransaction();
 
-        $query = "DELETE FROM jurusans_mata_kuliahs WHERE id_mata_kuliah = :id_mata_kuliah";
-        $this->database->query($query);
-        $this->database->bind("id_mata_kuliah", $id);
-        $this->database->execute();
+            $query = "DELETE FROM {$this->table} WHERE id = :id";
+            $this->database->query($query);
+            $this->database->bind("id", $id);
+            $this->database->execute();
+
+            $query = "DELETE FROM {$this->jurusan_mata_kuliah_table} WHERE id_mata_kuliah = :id_mata_kuliah";
+            $this->database->query($query);
+            $this->database->bind("id_mata_kuliah", $id);
+            $this->database->execute();
+
+            $this->database->commit();
+        } catch (Exception $exception) {
+            $this->database->rollback();
+            throw $exception;
+        }
     }
 
     public function updateSubject($data) {
@@ -90,6 +100,11 @@ class SubjectModel {
 
         $this->database->bind("kode", "$kode");
 
+        return $this->database->resultSet();
+    }
+
+    public function getByMajor($id) {
+        $this->database->query("SELECT mata_kuliahs.id FROM {$this->major_table} INNER JOIN {$this->jurusan_mata_kuliah_table} ON jurusans_mata_kuliahs.id_jurusan = jurusans.id INNER JOIN {$this->table} ON mata_kuliahs.id = jurusans_mata_kuliahs.id_mata_kuliah WHERE jurusans.id = '$id'");
         return $this->database->resultSet();
     }
 }

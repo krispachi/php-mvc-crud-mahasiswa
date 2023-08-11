@@ -68,7 +68,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="major.php" class="nav-link <?= str_contains($_SERVER['REQUEST_URI'], '/major') ? 'active' : '' ?>">
+					<a href="/majors" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/majors' ? 'active' : '' ?>">
 						<i class="nav-icon fas fa-university"></i>
 						<p>Jurusan</p>
 					</a>

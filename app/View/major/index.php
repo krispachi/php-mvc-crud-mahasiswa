@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KrisnaLTE | Mata Kuliah</title>
+    <title>KrisnaLTE | Jurusan</title>
     <?php require __DIR__ . "/../layouts/headlinks.php" ?>
     <!-- DataTables -->
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -21,13 +23,13 @@
     <?php require __DIR__ . "/../layouts/nav-aside.php"; ?>
 
     <!-- Modal -->
-    <div class="modal fade" id="subjectModal" tabindex="-1" aria-labelledby="subjectModalLabel" aria-hidden="true">
+    <div class="modal fade" id="majorModal" tabindex="-1" aria-labelledby="majorModalLabel" aria-hidden="true">
         <!-- form start -->
-        <form action="/subjects" method="post" id="modal-form">
+        <form action="/majors" method="post" id="modal-form">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="subjectModalLabel">Tambah Mata Kuliah</h5>
+                    <h5 class="modal-title" id="majorModalLabel">Tambah Jurusan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -36,30 +38,46 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="kode">Kode Mata Kuliah</label>
-                                <input type="text" name="kode" class="form-control" id="kode" value="<?= $_SESSION["form-input"]["kode"] ?? "" ?>" placeholder="Masukkan Kode Mata Kuliah" required>
+                                <label for="nama">Nama Jurusan</label>
+                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? "" ?>" placeholder="Masukkan Nama Jurusan">
                             </div>
                             <div class="form-group">
-                                <label for="nama">Nama Mata Kuliah</label>
-                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? "" ?>" placeholder="Masukkan Nama Mata Kuliah" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="jumlah_sks">Jumlah SKS</label>
-                                <input type="number" name="jumlah_sks" class="form-control" id="jumlah_sks" value="<?= $_SESSION["form-input"]["jumlah_sks"] ?? "" ?>" placeholder="Masukkan Jumlah SKS" required>
+                                <label for="mata_kuliah">Mata Kuliah</label>
+                                <select style="width: 100%;" class="js-example-basic-multiple" id="mata_kuliah" name="mata_kuliahs[]" multiple="multiple">
+                                    <?php
+                                        $majors = [];
+                                        $subjects = [];
+                                        $subjects = $model["subjects"];
+
+                                        foreach($subjects as $row) {
+                                            if(isset($_SESSION["form-input"]["mata_kuliahs"])) {
+                                                foreach($_SESSION["form-input"]["mata_kuliahs"] as $id_mata_kuliah) {
+                                                    if($id_mata_kuliah == $row["id"]) {
+                                                        echo "<option value=" . $row["id"] . " selected>" . $row["nama"] . "</option>";
+                                                    } else {
+                                                        echo "<option value=" . $row["id"] . ">" . $row["nama"] . "</option>";
+                                                    }
+                                                }
+                                            } 
+                                            else {
+                                                echo "<option value=" . $row["id"] . ">" . $row["nama"] . "</option>";
+                                            }
+                                        }
+
+                                        if(isset($_SESSION["form-input"])) {
+                                            unset($_SESSION["form-input"]);
+                                        }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" name="create_subject" class="btn btn-success button-save">Tambah</button>
+                    <button type="submit" name="create_jurusan" class="btn btn-success button-save">Tambah</button>
                 </div>
             </div>
-            <?php
-                if(isset($_SESSION["form-input"])) {
-                    unset($_SESSION["form-input"]);
-                }
-            ?>
         </form>
         </div>
     </div>
@@ -71,12 +89,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Mata Kuliah</h1>
+                        <h1>Jurusan</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Mata Kuliah</li>
+                            <li class="breadcrumb-item active">Jurusan</li>
                         </ol>
                     </div>
                 </div>
@@ -91,8 +109,8 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-								<h3 class="card-title">Tabel Daftar Mata Kuliah</h3>
-								<a class="btn btn-success ml-auto button-create" data-toggle="modal" data-target="#subjectModal">Tambah Mata Kuliah</a>
+								<h3 class="card-title">Tabel Daftar Jurusan</h3>
+								<a class="btn btn-success ml-auto button-create" data-toggle="modal" data-target="#majorModal">Tambah Jurusan</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -100,6 +118,7 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Jurusan</th>
                                     <th>Kode Mata Kuliah</th>
                                     <th>Mata Kuliah</th>
                                     <th>Jumlah SKS</th>
@@ -108,18 +127,48 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                        $majors = $model["majors"];
+                                        
                                         $iteration = 0;
-                                        foreach($model as $row) :
+                                        $model = new Krispachi\KrisnaLTE\Model\SubjectModel();
+                                        foreach($majors as $major) :
                                             $iteration++;
+
+                                            try {
+                                                $majors_subjects = $model->getByMajor($major["id"]);
+                                            } catch (Exception $exception) {
+                                                $majors_subjects = [];
+                                            }
                                     ?>
                                     <tr>
                                         <td><?= $iteration ?></td>
-                                        <td><?= $row["kode"] ?></td>
-                                        <td><?= $row["nama"] ?></td>
-                                        <td><?= $row["jumlah_sks"] ?></td>
+                                        <td><?= $major["nama"] ?? "-" ?></td>
+                                        <?php
+                                            $kode = [];
+                                            $nama = [];
+                                            $sks = [];
+                                            foreach ($subjects as $subject) {
+                                                foreach ($majors_subjects as $major_subject) {
+                                                    if ($subject["id"] == $major_subject["id"]) {
+                                                        $kode[] = $subject["kode"];
+                                                        $nama[] = $subject["nama"];
+                                                        $sks[] = $subject["jumlah_sks"];
+                                                    }
+                                                }
+                                            }
+
+                                            // Jika array kosong, ubah jadi -
+                                            $kode = empty($kode) ? ["-"] : $kode;
+                                            $nama = empty($nama) ? ["-"] : $nama;
+                                            $sks = empty($sks) ? ["-"] : $sks;
+                                            
+                                            echo '<td>' . implode("<br>", $kode) . '</td>';
+                                            echo '<td>' . implode("<br>", $nama) . '</td>';
+                                            echo '<td>' . implode("<br>", $sks) . '</td>';
+                                        ?>
                                         <td>
-                                            <button data-id="<?= $row["id"] ?>" class="btn btn-sm btn-warning button-edit">Ubah</button>
-                                            <form action="/subjects/delete/<?= $row["id"] ?>" method="post" class="form-delete d-inline-block">
+                                            <button data-id="<?= $major["id"] ?>" class="btn btn-sm btn-warning button-edit">Ubah</button>
+                                            <form action="/majors/delete/<?= $major["id"] ?>" method="post" class="form-delete d-inline-block">
 												<button type="submit" class="btn btn-sm btn-danger button-delete">Hapus</button>
 											</form>
                                         </td>
@@ -131,6 +180,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>#</th>
+                                    <th>Jurusan</th>
                                     <th>Kode Mata Kuliah</th>
                                     <th>Mata Kuliah</th>
                                     <th>Jumlah SKS</th>
@@ -161,6 +211,8 @@
 <!-- ./wrapper -->
 
 <?php require __DIR__ . "/../layouts/bodyscripts.php" ?>
+<!-- Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -191,6 +243,11 @@ $(document).ready(function() {
         "responsive": true,
     });
 
+    $('.js-example-basic-multiple').select2({
+        placeholder: "Pilih Mata Kuliah",
+        allowClear: true
+    });
+
     $(".form-delete").one("submit", function(e) {
         e.preventDefault();
         Swal.fire({
@@ -216,44 +273,50 @@ $(document).ready(function() {
     });
 
     $(".button-create").click(function() {
-        $(".button-save").text("Tambah").removeClass("btn-warning").addClass("btn-success").attr("name", "create_subject");
-        $("#subjectModalLabel").text("Tambah Mata Kuliah");
+        $(".button-save").text("Tambah").removeClass("btn-warning").addClass("btn-success").attr("name", "create_major");
+        $("#majorModalLabel").text("Tambah Jurusan");
     });
 
     $(".button-edit").click(function() {
         // Reset form
-        $("#modal-form").attr("action", "/subjects");
+        $("#modal-form").attr("action", "/majors");
         $("#modal-form")[0].reset();
-        
-        $.get("/subjects/" + $(this).data("id"), function(response) {
+        $("#mata_kuliah").val(null).trigger('change');
+
+        $.get("/majors/" + $(this).data("id"), function(response) {
             let data;
             try {
                 data = JSON.parse(response);
                 if(data.error) {
                     // Jika ada error
+                    // console.log(data.error);
                 } else {
                     // Set value dan action form
-                    $("#modal-form").attr("action", "/subjects/" + data.id);
-                    $("#kode").val(data.kode);
+                    $("#modal-form").attr("action", "/majors/" + data.id);
                     $("#nama").val(data.nama);
-                    $("#jumlah_sks").val(data.jumlah_sks);
+                    let mata_kuliah = [];
+                    data.mata_kuliahs.forEach(element => {
+                        mata_kuliah.push(element.id);
+                    });
+                    $("#mata_kuliah").val(mata_kuliah).trigger("change");
                 }
             } catch (exception) {
                 // Jika tidak ada respon dari server
             }
-            $(".button-save").text("Ubah").removeClass("btn-success").addClass("btn-warning").attr("name", "edit_subject");
-            $("#subjectModalLabel").text("Ubah Mata Kuliah");
-            $("#subjectModal").modal("show");
+            $(".button-save").text("Ubah").removeClass("btn-success").addClass("btn-warning").attr("name", "edit_major");
+            $("#majorModalLabel").text("Ubah Jurusan");
+            $("#majorModal").modal("show");
         });
     });
 
     // Clear form saat modal edit close dan cek atribut name button-save
-    $("#subjectModal").on('hidden.bs.modal', function() {
-        if($(".button-save").attr("name") == "edit_subject") {
-            $("#modal-form").attr("action", "/subjects");
+    $("#majorModal").on('hidden.bs.modal', function() {
+        if($(".button-save").attr("name") == "edit_major") {
+            $("#modal-form").attr("action", "/majors");
             $("#modal-form")[0].reset();
+            $("#mata_kuliah").val(null).trigger('change');
         }
-        $(".button-save").attr("name", "create_subject");
+        $(".button-save").attr("name", "create_major");
     });
 });
 </script>

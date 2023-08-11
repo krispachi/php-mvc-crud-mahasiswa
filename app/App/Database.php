@@ -49,6 +49,11 @@ class Database {
         $this->statement->execute();
     }
 
+    public function exec() {
+        $this->statement->execute();
+        return $this->connection->lastInsertId();
+    }
+
     public function resultSet() {
         $this->execute();
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
@@ -57,5 +62,17 @@ class Database {
     public function single() {
         $this->execute();
         return $this->statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function beginTransaction() {
+        return $this->connection->beginTransaction();
+    }
+
+    public function commit() {
+        return $this->connection->commit();
+    }
+
+    public function rollback() {
+        return $this->connection->rollBack();
     }
 }

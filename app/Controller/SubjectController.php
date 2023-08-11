@@ -63,6 +63,7 @@ class SubjectController {
 
         if(empty(trim($data["kode"])) || empty(trim($data["nama"])) || empty(trim($data["jumlah_sks"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
+            // Sengaja tidak isi return with input supaya tidak KACHAW
             header("Location: /subjects");
             exit(0);
         }

@@ -135,7 +135,7 @@
 <script src="AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Page specific script -->
 <script>
-$(function () {
+$(document).ready(function() {
 	$("#example1").DataTable({
 		"responsive": true, "lengthChange": false, "autoWidth": false, "responsive": true,
 		"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]

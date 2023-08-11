@@ -10,6 +10,7 @@ use Krispachi\KrisnaLTE\Middleware\AuthMiddleware;
 use Krispachi\KrisnaLTE\Middleware\GuestMiddleware;
 use Krispachi\KrisnaLTE\Controller\SubjectController;
 use Krispachi\KrisnaLTE\Controller\MahasiswaController;
+use Krispachi\KrisnaLTE\Controller\MajorController;
 
 Router::add("GET", "/login", AuthController::class, "index", [GuestMiddleware::class]);
 Router::add("POST", "/login", AuthController::class, "signin", [GuestMiddleware::class]);
@@ -34,5 +35,11 @@ Router::add("POST", "/subjects", SubjectController::class, "store", [AuthMiddlew
 Router::add("GET", "/subjects/([0-9a-zA-Z]*)", SubjectController::class, "subject", [AuthMiddleware::class]);
 Router::add("POST", "/subjects/([0-9a-zA-Z]*)", SubjectController::class, "edit", [AuthMiddleware::class]);
 Router::add("POST", "/subjects/delete/([0-9a-zA-Z]*)", SubjectController::class, "delete", [AuthMiddleware::class]);
+
+Router::add("GET", "/majors", MajorController::class, "index", [AuthMiddleware::class]);
+Router::add("POST", "/majors", MajorController::class, "store", [AuthMiddleware::class]);
+Router::add("GET", "/majors/([0-9a-zA-Z]*)", MajorController::class, "major", [AuthMiddleware::class]);
+Router::add("POST", "/majors/delete/([0-9a-zA-Z]*)", MajorController::class, "delete", [AuthMiddleware::class]);
+Router::add("POST", "/majors/([0-9a-zA-Z]*)", MajorController::class, "edit", [AuthMiddleware::class]);
 
 Router::run();

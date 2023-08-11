@@ -102,7 +102,7 @@
 <?php require __DIR__ . "/../layouts/bodyscripts.php" ?>
 <!-- Page specific script -->
 <script>
-$(function () {
+$(document).ready(function() {
 	$(".button-delete-profile").click(function(e) {
         e.preventDefault();
         Swal.fire({
