@@ -1,4 +1,4 @@
-# PHP MVC CRUD Mahasiswa (sedang dibuat)
+# PHP MVC CRUD Mahasiswa
 CRUD Mahasiswa dengan PHP MVC menggunakan template AdminLTE
 
 ## Informasi singkat
