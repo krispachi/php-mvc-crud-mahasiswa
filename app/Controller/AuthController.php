@@ -164,7 +164,7 @@ class AuthController {
         foreach($data as $key => $input) {
             if(!empty(trim($input))) {
                 $_SESSION["form-input"] += [
-                    "$key" => $input
+                    "$key" => trim($input)
                 ];
             }
         }

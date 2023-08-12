@@ -5,6 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>KrisnaLTE | Ubah</title>
     <?php require __DIR__ . "/../layouts/headlinks.php" ?>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 2em;
+        }
+        .select2-container--default .select2-selection--single {
+            padding: 0;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 4px;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -48,27 +60,44 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="/mahasiswas/update/<?= $model["id"] ?>" method="post">
+                            <form action="/mahasiswas/update/<?= $model["mahasiswa"]["id"] ?>" method="post" class="update-form">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nim">NIM</label>
-                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? $model["nim"] ?? "" ?>" placeholder="Masukkan NIM">
+                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? $model["mahasiswa"]["nim"] ?? "" ?>" placeholder="Masukkan NIM">
                                     </div>
                                     <div class="form-group">
                                         <label for="nama">Nama</label>
-                                        <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? $model["nama"] ?? "" ?>" placeholder="Masukkan Nama">
+                                        <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? $model["mahasiswa"]["nama"] ?? "" ?>" placeholder="Masukkan Nama">
                                     </div>
                                     <div class="form-group">
                                         <label for="jurusan">Jurusan</label>
-                                        <input type="text" name="id_jurusan" class="form-control" id="jurusan" value="<?= $_SESSION["form-input"]["id_jurusan"] ?? $model["id_jurusan"] ?? "" ?>" placeholder="Masukkan Jurusan">
+                                        <select style="width: 100%;" name="id_jurusan" class="js-example-basic-single" id="jurusan">
+                                            <option value="<?= null ?>" selected disabled>Pilih Jurusan</option>
+                                            <?php
+                                                foreach($model["majors"] as $jurusan) {
+                                                    if(isset($_SESSION["form-input"]["id_jurusan"])) {
+                                                        if($_SESSION["form-input"]["id_jurusan"] == $jurusan["id"]) {
+                                                            echo "<option value=" . $jurusan["id"] . " selected>" . $jurusan["nama"] . "</option>";
+                                                        } else {
+                                                            echo "<option value=" . $jurusan["id"] . ">" . $jurusan["nama"] . "</option>";
+                                                        }
+                                                    } else if($model["mahasiswa"]["id_jurusan"] == $jurusan["id"]) {
+                                                        echo "<option value=" . $jurusan["id"] . " selected>" . $jurusan["nama"] . "</option>";
+                                                    } else {
+                                                        echo "<option value=" . $jurusan["id"] . ">" . $jurusan["nama"] . "</option>";
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
-                                        <input type="text" name="alamat" class="form-control" id="alamat" value="<?= $_SESSION["form-input"]["alamat"] ?? $model["alamat"] ?? "" ?>" placeholder="Masukkan Alamat">
+                                        <input type="text" name="alamat" class="form-control" id="alamat" value="<?= $_SESSION["form-input"]["alamat"] ?? $model["mahasiswa"]["alamat"] ?? "" ?>" placeholder="Masukkan Alamat">
                                     </div>
                                     <div class="form-group">
                                         <label for="telepon">Telepon</label>
-                                        <input type="number" name="telepon" class="form-control" id="telepon" value="<?= $_SESSION["form-input"]["telepon"] ?? $model["telepon"] ?? "" ?>" placeholder="Masukkan Telepon">
+                                        <input type="number" name="telepon" class="form-control" id="telepon" value="<?= $_SESSION["form-input"]["telepon"] ?? $model["mahasiswa"]["telepon"] ?? "" ?>" placeholder="Masukkan Telepon">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -97,5 +126,38 @@
 <!-- ./wrapper -->
 
 <?php require __DIR__ . "/../layouts/bodyscripts.php" ?>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".js-example-basic-single").select2({
+            placeholder: "Pilih Jurusan",
+            allowClear: true
+        });
+
+        $(".update-form").on("submit", function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Konfirmasi Ubah',
+                text: "kamu tidak bisa kembali setelah ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Ubah sekarang!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).unbind("submit").submit();
+                } else {
+                    Swal.fire({
+                        title: 'Batal!',
+                        text: 'Mahasiswa tidak diubah.',
+                        icon: 'success',
+                        timer: 4000
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

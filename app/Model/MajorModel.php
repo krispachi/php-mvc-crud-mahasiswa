@@ -142,4 +142,13 @@ class MajorModel {
 
         return $this->database->resultSet();
     }
+
+    public function getNamaById($id) {
+        $query = "SELECT nama FROM {$this->table} WHERE id = :id";
+        $this->database->query($query);
+
+        $this->database->bind("id", "$id");
+
+        return $this->database->single();
+    }
 }

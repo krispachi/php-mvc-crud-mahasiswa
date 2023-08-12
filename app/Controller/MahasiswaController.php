@@ -6,6 +6,8 @@ use Exception;
 use Krispachi\KrisnaLTE\App\FlashMessage;
 use Krispachi\KrisnaLTE\App\View;
 use Krispachi\KrisnaLTE\Model\MahasiswaModel;
+use Krispachi\KrisnaLTE\Model\MajorModel;
+use Krispachi\KrisnaLTE\Model\SubjectModel;
 
 class MahasiswaController {
     public function index() {
@@ -14,7 +16,8 @@ class MahasiswaController {
     }
 
     public function create() {
-        View::render("mahasiswa/create");
+        $model = new MajorModel();
+        View::render("mahasiswa/create", $model->getAllMajor());
     }
 
     public function store() {
@@ -48,13 +51,21 @@ class MahasiswaController {
     }
 
     public function update($id) {
+        $result = [];
         $model = new MahasiswaModel();
-        if(empty($model->getMahasiswaById($id))) {
+        $result += [
+            "mahasiswa" => $model->getMahasiswaById($id)
+        ];
+        if(empty($result["mahasiswa"])) {
             FlashMessage::setFlashMessage("error", "Mahasiswa tidak ditemukan");
             header("Location: /");
             exit(0);
         }
-        View::render("mahasiswa/update", $model->getMahasiswaById($id));
+        $model = new MajorModel();
+        $result += [
+            "majors" => $model->getAllMajor()
+        ];
+        View::render("mahasiswa/update", $result);
     }
 
     public function edit($id) {
@@ -107,7 +118,7 @@ class MahasiswaController {
         foreach($data as $key => $input) {
             if(!empty(trim($input))) {
                 $_SESSION["form-input"] += [
-                    "$key" => $input
+                    "$key" => trim($input)
                 ];
             }
         }

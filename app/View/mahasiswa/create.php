@@ -5,6 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>KrisnaLTE | Tambah</title>
     <?php require __DIR__ . "/../layouts/headlinks.php" ?>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 2em;
+        }
+        .select2-container--default .select2-selection--single {
+            padding: 0;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 4px;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -60,7 +72,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="jurusan">Jurusan</label>
-                                        <input type="number" name="id_jurusan" class="form-control" id="jurusan" value="<?= $_SESSION["form-input"]["id_jurusan"] ?? "" ?>" placeholder="Masukkan Jurusan">
+                                        <select style="width: 100%;" name="id_jurusan" class="js-example-basic-single" id="jurusan">
+                                            <option value="<?= null ?>" selected disabled>Pilih Jurusan</option>
+                                            <?php
+                                                foreach($model as $jurusan) {
+                                                    if(isset($_SESSION["form-input"]["id_jurusan"])) {
+                                                        if($_SESSION["form-input"]["id_jurusan"] == $jurusan["id"]) {
+                                                            echo "<option value=" . $jurusan["id"] . " selected>" . $jurusan["nama"] . "</option>";
+                                                        } else {
+                                                            echo "<option value=" . $jurusan["id"] . ">" . $jurusan["nama"] . "</option>";
+                                                        }
+                                                    } else {
+                                                        echo "<option value=" . $jurusan["id"] . ">" . $jurusan["nama"] . "</option>";
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
@@ -97,5 +124,14 @@
 <!-- ./wrapper -->
 
 <?php require __DIR__ . "/../layouts/bodyscripts.php" ?>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".js-example-basic-single").select2({
+            placeholder: "Pilih Jurusan",
+            allowClear: true
+        });
+    });
+</script>
 </body>
 </html>

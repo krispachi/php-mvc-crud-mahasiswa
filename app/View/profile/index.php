@@ -107,7 +107,7 @@ $(document).ready(function() {
         e.preventDefault();
         Swal.fire({
             title: 'Apakah kamu yakin?',
-            text: "Kamu tidak dapat membatalkan aksi ini!",
+            text: "kamu tidak bisa kembali setelah ini!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -117,7 +117,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: 'Sekali lagi, apakah kamu yakin?',
-                    text: "Kamu tidak dapat membatalkan aksi ini!",
+                    text: "kamu tidak bisa kembali setelah ini!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -150,7 +150,7 @@ $(document).ready(function() {
         e.preventDefault();
         Swal.fire({
             title: 'Apakah kamu yakin?',
-            text: "Kamu tidak dapat membatalkan aksi ini!",
+            text: "kamu tidak bisa kembali setelah ini!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -160,7 +160,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: 'Sekali lagi, apakah kamu yakin?',
-                    text: "Kamu tidak dapat membatalkan aksi ini!",
+                    text: "kamu tidak bisa kembali setelah ini!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2023 at 05:40 AM
+-- Generation Time: Aug 12, 2023 at 03:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,7 +40,8 @@ INSERT INTO `jurusans` (`id`, `nama`) VALUES
 (1, 'Teknik Informatika'),
 (2, 'Paknik Informatika'),
 (3, 'Minik Informatika'),
-(12, 'Senior Informatika');
+(12, 'Senior Informatika'),
+(14, 'Junior Informatika');
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,9 @@ INSERT INTO `jurusans_mata_kuliahs` (`id`, `id_jurusan`, `id_mata_kuliah`) VALUE
 (5, 3, 2),
 (9, 12, 1),
 (10, 12, 2),
-(11, 12, 3);
+(11, 12, 3),
+(15, 14, 1),
+(16, 14, 2);
 
 -- --------------------------------------------------------
 
@@ -88,9 +91,10 @@ CREATE TABLE `mahasiswas` (
 --
 
 INSERT INTO `mahasiswas` (`id`, `nim`, `nama`, `alamat`, `telepon`, `id_jurusan`) VALUES
-(4, '111', 'aaa', 'aaa', '111', 111),
-(8, '222', 'bbbaaa', 'bbb', '222', 222),
-(10, '444', 'ddd', 'ddd', '441', 444);
+(4, '111', 'aaaaaa', 'aaa', '111', 1),
+(8, '222', 'bbbaaa', 'bbb', '222', 1),
+(13, '555', 'eee', 'eee', '555', 14),
+(14, '666', 'fff', 'fff', '666', 2);
 
 -- --------------------------------------------------------
 
@@ -179,25 +183,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jurusans`
 --
 ALTER TABLE `jurusans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `jurusans_mata_kuliahs`
 --
 ALTER TABLE `jurusans_mata_kuliahs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `mata_kuliahs`
 --
 ALTER TABLE `mata_kuliahs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `users`

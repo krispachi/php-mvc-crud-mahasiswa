@@ -6,7 +6,6 @@ use Exception;
 use Krispachi\KrisnaLTE\App\FlashMessage;
 use Krispachi\KrisnaLTE\App\View;
 use Krispachi\KrisnaLTE\Model\MajorModel;
-use Krispachi\KrisnaLTE\Model\MajorSubjectModel;
 use Krispachi\KrisnaLTE\Model\SubjectModel;
 
 class MajorController {
@@ -125,7 +124,7 @@ class MajorController {
                 }
             } else if(!empty(trim($input))) {
                 $_SESSION["form-input"] += [
-                    "$key" => $input
+                    "$key" => trim($input)
                 ];
             }
         }

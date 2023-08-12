@@ -12,4 +12,4 @@
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- LogOut BackgroundColor -->
-<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="<?php __DIR__ ?>/css/navbar.css">

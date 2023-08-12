@@ -191,23 +191,23 @@ $(document).ready(function() {
         "responsive": true,
     });
 
-    $(".form-delete").one("submit", function(e) {
+    $(".form-delete").on("submit", function(e) {
         e.preventDefault();
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Konfirmasi Hapus',
+            text: "kamu tidak bisa kembali setelah ini!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ya, hapus sekarang!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $(this).submit();
+                $(this).unbind("submit").submit();
             } else {
                 Swal.fire({
                     title: 'Batal!',
-                    text: 'Data tidak jadi dihapus.',
+                    text: 'Mata Kuliah tidak jadi dihapus.',
                     icon: 'success',
                     timer: 4000
                 });

@@ -14,6 +14,7 @@
 
 <?php
     use Krispachi\KrisnaLTE\App\FlashMessage;
+
     FlashMessage::flashMessage();
 ?>
 
@@ -67,17 +68,43 @@
 								</thead>
 								<tbody>
 									<?php
+										$majors = new Krispachi\KrisnaLTE\Model\MajorModel();
+										$subjects = new Krispachi\KrisnaLTE\Model\SubjectModel();
+
 										$iteration = 0;
 										foreach($model as $row) :
 											$iteration++;
+
+											try {
+                                                $majors_subjects = $subjects ->getByMajor($row["id_jurusan"]);
+                                            } catch (Exception $exception) {
+                                                $majors_subjects = [];
+                                            }
 									?>
 									<tr>
 										<td><?= $iteration ?? "-" ?></td>
 										<td><?= $row["nim"] ?? "-" ?></td>
 										<td><?= $row["nama"] ?? "-" ?></td>
-										<td><?= $row["id_jurusan"] == 0 ? "-" : $row["id_jurusan"]; ?></td>
-										<td>a</td>
-										<td>a</td>
+										<td><?= $row["id_jurusan"] < 0 ? "-" : $majors->getNamaById($row["id_jurusan"])["nama"] ?></td>
+										<?php
+                                            $namaKode = [];
+                                            $sks = [];
+                                            foreach ($subjects->getAllSubject() as $subject) {
+                                                foreach ($majors_subjects as $major_subject) {
+                                                    if ($subject["id"] == $major_subject["id"]) {
+                                                        $namaKode[] = $subject["nama"] . " (" . $subject["kode"] . ")";
+                                                        $sks[] = $subject["jumlah_sks"];
+                                                    }
+                                                }
+                                            }
+
+                                            // Jika array kosong, ubah jadi -
+                                            $namaKode = empty($namaKode) ? ["-"] : $namaKode;
+                                            $sks = empty($sks) ? ["-"] : $sks;
+                                            
+                                            echo '<td>' . implode("<br>", $namaKode) . '</td>';
+                                            echo '<td>' . implode("<br>", $sks) . '</td>';
+                                        ?>
 										<td><?= $row["alamat"] ?? "-" ?></td>
 										<td><?= $row["telepon"] ?? "-" ?></td>
 										<td style="white-space: nowrap;">
@@ -151,23 +178,23 @@ $(document).ready(function() {
 	});
 
 	// ada banyak form di tabel dengan class .form-delete, makannya pakai $(this)
-	$(".form-delete").one("submit", function(e) {
+	$(".form-delete").on("submit", function(e) {
 		e.preventDefault();
 		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
+			title: 'Konfirmasi Hapus',
+			text: "kamu tidak bisa kembali setelah ini!",
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
+			confirmButtonText: 'Ya, hapus sekarang!'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				$(this).submit();
+				$(this).unbind("submit").submit();
 			} else {
 				Swal.fire({
 					title: 'Batal!',
-					text: 'Data tidak jadi dihapus.',
+					text: 'Mahasiswa tidak dihapus.',
 					icon: 'success',
 					timer: 4000
 				});
