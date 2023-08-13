@@ -26,7 +26,7 @@ Website Create, Read, Update, Delete (CRUD) Mahasiswa dengan PHP MVC menggunakan
 7. Buka `localhost/phpmyadmin` di browser
 8. Buat database baru dengan nama `db_siskampus`
 9. Klik tulisan *Import* di bagian atas
-10. Di bagian *File to import:* pilih file `.sql` yang ada di folder `php-mvc-crud-mahasiswa-main/`
+10. Di bagian *File to import:* pilih file `db_siskampus.sql` yang ada di folder `php-mvc-crud-mahasiswa-main/`
 11. Kalau sudah, klik tombol *Import* di bagian paling bawah
 - Proses menjalankan website
 12. Buka folder `php-mvc-crud-mahasiswa-main/` di *Command Prompt*
