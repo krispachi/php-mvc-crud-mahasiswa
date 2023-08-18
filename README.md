@@ -32,7 +32,7 @@ Website Create, Read, Update, Delete (CRUD) Mahasiswa dengan PHP MVC menggunakan
 12. Buka folder `php-mvc-crud-mahasiswa-main/` di *Command Prompt*
 13. Ketik `composer update` untuk men-download hal yang dibutuhkan website
 14. Pindah ke folder public dengan mengetik `cd public` di *Command Prompt*
-15. Jalankan server PHP dengan mengetik `php -s localhost:8080`
+15. Jalankan server PHP dengan mengetik `php -S localhost:8080`
 16. Akses website dari Web Browser ke alamat localhost:8080
 
 ## Informasi tambahan
