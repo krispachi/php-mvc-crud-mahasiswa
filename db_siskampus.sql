@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2023 at 04:45 AM
+-- Generation Time: Aug 28, 2023 at 11:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,8 @@ INSERT INTO `jurusans` (`id`, `nama`) VALUES
 (2, 'Paknik Informatika'),
 (3, 'Minik Informatika'),
 (12, 'Senior Informatika'),
-(14, 'Junior Informatika');
+(14, 'Junior Informatika'),
+(18, 'Sepupu Informatika');
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,10 @@ INSERT INTO `jurusans_mata_kuliahs` (`id`, `id_jurusan`, `id_mata_kuliah`) VALUE
 (10, 12, 2),
 (11, 12, 3),
 (15, 14, 1),
-(16, 14, 2);
+(16, 14, 2),
+(35, 18, 1),
+(36, 18, 3),
+(37, 18, 8);
 
 -- --------------------------------------------------------
 
@@ -94,7 +98,8 @@ INSERT INTO `mahasiswas` (`id`, `nim`, `nama`, `alamat`, `telepon`, `id_jurusan`
 (4, '111', 'aaaaaa', 'aaa', '111', 1),
 (8, '222', 'bbbaaa', 'bbb', '222', 1),
 (13, '555', 'eee', 'eee', '555', 14),
-(14, '666', 'fff', 'fff', '666', 2);
+(14, '666', 'fff', 'fff', '666', 2),
+(16, '333', 'ccc', 'ccc', '333', 18);
 
 -- --------------------------------------------------------
 
@@ -129,17 +134,19 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','petugas_pendaftaran') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(18, 'a', 'a@a.a', '$2y$10$E7bNdtfqWRh3KI4y/ZhHb.2FKKSNRctXOXQRrg1qWxx9VO/B0DZx.'),
-(19, 'aa', 'aa@a.a', '$2y$10$zuNCOIAl.heau5bWoE.QI.Qlk6wHIoQitLes50l3fPlcokNL5f4CS'),
-(20, 'ddd', 'ddd@d.d', '$2y$10$nvDtBPrFiqjFxiT/mqjH7edGLF7gYjROIIJDGK5nsy4i2o5ue6v1e');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
+(19, 'aa', 'aa@a.a', '$2y$10$zuNCOIAl.heau5bWoE.QI.Qlk6wHIoQitLes50l3fPlcokNL5f4CS', 'petugas_pendaftaran'),
+(20, 'ddd', 'ddd@d.d', '$2y$10$nvDtBPrFiqjFxiT/mqjH7edGLF7gYjROIIJDGK5nsy4i2o5ue6v1e', NULL),
+(21, 'Emeth', 'golem@gmail.com', '$2y$10$l8JXCShOFewvLE.EOCth1enUBcDAiMimrtnX96lIshRo33hJhNI3K', 'admin'),
+(22, 'a', 'a@a.a', '$2y$10$7uGjgXeziXOfVxUXChRzxuWMCzhV6MBRZtic89HtxHruxFn60Ze6m', NULL);
 
 --
 -- Indexes for dumped tables
@@ -161,7 +168,8 @@ ALTER TABLE `jurusans_mata_kuliahs`
 -- Indexes for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_jurusan` (`id_jurusan`);
 
 --
 -- Indexes for table `mata_kuliahs`
@@ -184,19 +192,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jurusans`
 --
 ALTER TABLE `jurusans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `jurusans_mata_kuliahs`
 --
 ALTER TABLE `jurusans_mata_kuliahs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `mata_kuliahs`
@@ -208,7 +216,17 @@ ALTER TABLE `mata_kuliahs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `mahasiswas`
+--
+ALTER TABLE `mahasiswas`
+  ADD CONSTRAINT `mahasiswas_ibfk_1` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusans` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

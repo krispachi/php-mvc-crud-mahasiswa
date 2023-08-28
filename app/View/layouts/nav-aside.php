@@ -37,6 +37,7 @@
 						$payload = Firebase\JWT\JWT::decode($jwt, new Firebase\JWT\Key(Krispachi\KrisnaLTE\Controller\AuthController::$SECRET_KEY, "HS256"));
 						$query = new Krispachi\KrisnaLTE\Model\UserModel;
 						$result = $query->getUserById($payload->user_id);
+						$role = $query->getRoleUserById($payload->user_id)["role"];
 						echo "<a class='d-block'>" . $result["username"] ?? "N/A" . "</a>";
 					} else {
 						echo "<a class='d-block'>Krisna Ariwidnyana</a>";
@@ -67,6 +68,10 @@
 						<p>Dashboard</p>
 					</a>
 				</li>
+
+				<?php
+					if($role === "admin") :
+				?>
 				<li class="nav-item">
 					<a href="/majors" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/majors' ? 'active' : '' ?>">
 						<i class="nav-icon fas fa-university"></i>
@@ -79,6 +84,10 @@
 						<p>Mata Kuliah</p>
 					</a>
 				</li>
+				<?php
+					endif;
+				?>
+
 				<li class="nav-item">
 					<a href="/users" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/users' ? 'active' : '' ?>">
 						<i class="nav-icon fas fa-user-cog"></i>

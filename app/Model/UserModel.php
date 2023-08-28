@@ -24,13 +24,19 @@ class UserModel {
         return $this->database->single();
     }
 
+    public function getRoleUserById($id) {
+        $this->database->query("SELECT role FROM {$this->table} WHERE id = :id");
+        $this->database->bind("id", $id);
+        return $this->database->single();
+    }
+
     public function createUser($data) {
         $result = $this->getUserByUsername($data["username"]);
         if(!empty($result)) {
             throw new Exception("Username sudah tersedia");
         }
         
-        $query = "INSERT INTO {$this->table} VALUES('', :username, :email, :password)";
+        $query = "INSERT INTO {$this->table} VALUES('', :username, :email, :password, null)";
         $this->database->query($query);
 
         $this->database->bind("username", $data["username"]);

@@ -48,7 +48,11 @@
 						<div class="card">
 							<div class="card-header d-flex align-items-center">
 								<h3 class="card-title">Tabel Mahasiswa</h3>
-								<a href="/mahasiswas/create" class="btn btn-success ml-auto">Tambah Mahasiswa</a>
+								<?php
+									if($role === "admin" || $role === "petugas_pendaftaran") {
+										echo '<a href="/mahasiswas/create" class="btn btn-success ml-auto">Tambah Mahasiswa</a>';
+									}
+								?>
 							</div>
 							<!-- /.card-header -->
 							<div class="card-body table-responsive">
@@ -63,7 +67,11 @@
 									<th>Jumlah SKS</th>
 									<th>Alamat</th>
 									<th>Telepon</th>
-									<th>Aksi</th>
+									<?php
+										if($role === "admin" || $role === "petugas_pendaftaran") {
+											echo '<th>Aksi</th>';
+										}
+									?>
 								</tr>
 								</thead>
 								<tbody>
@@ -107,12 +115,20 @@
                                         ?>
 										<td><?= $row["alamat"] ?? "-" ?></td>
 										<td><?= $row["telepon"] ?? "-" ?></td>
+
+										<?php
+											if($role === "admin" || $role === "petugas_pendaftaran") :
+										?>
 										<td style="white-space: nowrap;">
 											<a href="/mahasiswas/update/<?= $row["id"] ?>" class="btn btn-sm btn-warning">Ubah</a>
 											<form action="/mahasiswas/delete/<?= $row["id"] ?>" method="post" class="form-delete d-inline-block">
 												<button type="submit" class="btn btn-sm btn-danger button-delete">Hapus</button>
 											</form>
 										</td>
+										<?php
+											endif;
+										?>
+										
 									</tr>
 									<?php
 										endforeach;
@@ -128,7 +144,11 @@
 									<th>Jumlah SKS</th>
 									<th>Alamat</th>
 									<th>Telepon</th>
-									<th>Aksi</th>
+									<?php
+										if($role === "admin" || $role === "petugas_pendaftaran") {
+											echo '<th>Aksi</th>';
+										}
+									?>
 								</tr>
 								</tfoot>
 								</table>
