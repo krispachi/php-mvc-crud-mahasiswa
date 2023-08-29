@@ -89,7 +89,12 @@ class SubjectController {
             header("Location: /subjects");
             exit(0);
         } catch (Exception $exception) {
-            FlashMessage::setFlashMessage("error", $exception->getMessage());
+            if(preg_match("/23000/", $exception->getMessage())) {
+                $message = "Hapus dibatalkan, data terdaftar sebagai Foreign Key di tabel lain";
+            } else {
+                $message = $exception->getMessage();
+            }
+            FlashMessage::setFlashMessage("error", $message);
             header("Location: /subjects");
             exit(0);
         }
