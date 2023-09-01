@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 06:58 AM
+-- Generation Time: Sep 01, 2023 at 07:23 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -163,7 +163,8 @@ ALTER TABLE `jurusans`
 --
 ALTER TABLE `jurusans_mata_kuliahs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_mata_kuliah` (`id_mata_kuliah`);
+  ADD KEY `id_mata_kuliah` (`id_mata_kuliah`),
+  ADD KEY `jurusans_mata_kuliahs_ibfk_3` (`id_jurusan`);
 
 --
 -- Indexes for table `mahasiswas`
@@ -193,25 +194,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jurusans`
 --
 ALTER TABLE `jurusans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `jurusans_mata_kuliahs`
 --
 ALTER TABLE `jurusans_mata_kuliahs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `mahasiswas`
 --
 ALTER TABLE `mahasiswas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `mata_kuliahs`
 --
 ALTER TABLE `mata_kuliahs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -227,7 +228,8 @@ ALTER TABLE `users`
 -- Constraints for table `jurusans_mata_kuliahs`
 --
 ALTER TABLE `jurusans_mata_kuliahs`
-  ADD CONSTRAINT `jurusans_mata_kuliahs_ibfk_2` FOREIGN KEY (`id_mata_kuliah`) REFERENCES `mata_kuliahs` (`id`);
+  ADD CONSTRAINT `jurusans_mata_kuliahs_ibfk_2` FOREIGN KEY (`id_mata_kuliah`) REFERENCES `mata_kuliahs` (`id`),
+  ADD CONSTRAINT `jurusans_mata_kuliahs_ibfk_3` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mahasiswas`
