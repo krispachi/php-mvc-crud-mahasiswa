@@ -32,7 +32,7 @@ class SubjectModel {
             throw new Exception("Kode Mata Kuliah sudah tersedia");
         }
         
-        $query = "INSERT INTO {$this->table} (id, kode, nama, jumlah_sks) VALUES('', :kode, :nama, :jumlah_sks)";
+        $query = "INSERT INTO {$this->table} (kode, nama, jumlah_sks) VALUES(:kode, :nama, :jumlah_sks)";
         $this->database->query($query);
 
         $this->database->bind("kode", $data["kode"]);

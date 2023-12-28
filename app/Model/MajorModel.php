@@ -36,7 +36,7 @@ class MajorModel {
             $this->database->beginTransaction();
 
             // insert ke database jurusans
-            $query = "INSERT INTO {$this->table} (id, nama) VALUES('', :nama)";
+            $query = "INSERT INTO {$this->table} (nama) VALUES(:nama)";
             $this->database->query($query);
             $this->database->bind("nama", $data["nama"]);
             $last_insert_major = $this->database->exec();

@@ -30,7 +30,7 @@ class MahasiswaModel {
             throw new Exception("NIM sudah tersedia");
         }
         
-        $query = "INSERT INTO {$this->table} (id, nim, nama, alamat, telepon, id_jurusan) VALUES('', :nim, :nama, :alamat, :telepon, :id_jurusan)";
+        $query = "INSERT INTO {$this->table} (nim, nama, alamat, telepon, id_jurusan) VALUES(:nim, :nama, :alamat, :telepon, :id_jurusan)";
         $this->database->query($query);
 
         $this->database->bind("nim", $data["nim"]);
