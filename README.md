@@ -20,7 +20,8 @@ Website Create, Read, Update, Delete (CRUD) Mahasiswa dengan PHP MVC menggunakan
 1. Pastikan Anda sudah menginstall [XAMPP](https://www.apachefriends.org/download.html) dan [Composer](https://getcomposer.org/) di komputer Anda
 2. Download semua file di repository ini
 3. Ekstrak file jika hasil download berupa file `.zip`
-4. Download [AdminLTE](https://adminlte.io/) dan isinya dipindahkan ke folder `php-mvc-crud-mahasiswa-main/public/AdminLTE/`
+4. Download [AdminLTE](https://adminlte.io/) dan isinya dipindahkan ke direktori `php-mvc-crud-mahasiswa-main/public/AdminLTE/`
+5. Di direktori `php-mvc-crud-mahasiswa-main` ketik `composer install` pada terminal untuk mengunduh keperluan website
 - Proses pengaturan
 6. Start *Apache* dan *MySQL* di XAMPP Control Panel
 7. Buka `localhost/phpmyadmin` di browser
